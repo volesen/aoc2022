@@ -37,15 +37,15 @@
    :draw 3
    :won 6})
 
-(defn strategy [move outcome]
+(defn strategy [opponent-move outcome]
   (cond
-    (= outcome :draw) move
-    (= outcome :lost) (beats move)
-    :else (beats (beats move))))
+    (= outcome :draw) opponent-move
+    (= outcome :lost) (beats opponent-move)
+    :else (beats (beats opponent-move))))
 
 
-(defn score [[move outcome]]
-  (+ (move-score (strategy move outcome)) (match-score outcome)))
+(defn score [[opponent-move outcome]]
+  (+ (move-score (strategy opponent-move outcome)) (match-score outcome)))
 
 
 (->> input

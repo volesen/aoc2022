@@ -23,10 +23,10 @@
    :paper :rock
    :scissors :paper})
 
-(defn win [p1 p2]
+(defn outcome [player opponent]
   (cond
-    (= p1 p2) :draw
-    (= (beats p1) p2) :won
+    (= player opponent) :draw
+    (= (beats player) opponent) :won
     :else :lost))
 
 (def move-score
@@ -39,8 +39,8 @@
    :draw 3
    :won 6})
 
-(defn score [[p1 p2]]
-  (+ (move-score p2) (match-score (win p2 p1))))
+(defn score [[opponent player]]
+  (+ (move-score player) (match-score (outcome player opponent))))
 
 (->> input
      (parse-input)
