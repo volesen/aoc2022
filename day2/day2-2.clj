@@ -38,10 +38,10 @@
    :won 6})
 
 (defn strategy [opponent-move outcome]
-  (cond
-    (= outcome :draw) opponent-move
-    (= outcome :lost) (beats opponent-move)
-    :else (beats (beats opponent-move))))
+  (case outcome
+    :draw opponent-move
+    :lost (beats opponent-move)
+    :won (beats (beats opponent-move))))
 
 
 (defn score [[opponent-move outcome]]
