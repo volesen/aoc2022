@@ -11,25 +11,27 @@
     (<= 97 (int char) 122) (- (int char) 96)
     (<= 65 (int char) 90) (- (int char) 38)))
 
-(defn common-elements [coll]
-  (reduce set/intersection (map set coll)))
+(defn common-item [coll]
+  (->> coll
+       (map set)
+       (reduce set/intersection)
+       first))
 
 ; Part 1
 (->> input
      str/split-lines
      (map parse-compartments)
-     (map common-elements)
-     (map first)
+     (map common-item)
      (map priority)
      (reduce +))
+
 
 ; Part 2
 
 (->> input
      str/split-lines
      (partition 3)
-     (map common-elements)
-     (map first)
+     (map common-item)
      (map priority)
      (reduce +))
 
