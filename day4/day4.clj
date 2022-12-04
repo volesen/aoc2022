@@ -15,7 +15,7 @@
 
 ; Logic
 
-(defn fully-contains? [[[start1 end1] [start2 end2]]]
+(defn fully-contained? [[[start1 end1] [start2 end2]]]
   (or  (and (<= start1 start2) (<= end2 end1))
        (and (<= start2 start1) (<= end1 end2))))
 
@@ -28,7 +28,7 @@
 (->> input
      str/split-lines
      (map parse-pair)
-     (filter fully-contains?)
+     (filter fully-contained?)
      count)
 
 
