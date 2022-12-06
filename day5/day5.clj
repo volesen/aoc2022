@@ -1,12 +1,10 @@
 (require '[clojure.string :as str])
 
-(def input (slurp "day5/input"))
+(def input (slurp "day5/input.txt"))
 
 (defn parse-move [move]
   (let [[_ n _ from _ to] (str/split move #" ")]
-    [(parse-long n)
-     (dec (parse-long from))
-     (dec (parse-long to))]))
+    [(parse-long n) (dec (parse-long from)) (dec (parse-long to))]))
 
 (defn parse-moves [moves]
   (map parse-move (str/split-lines moves)))
@@ -22,46 +20,32 @@
 
 (defn parse [input]
   (let [[stacks moves] (str/split input #"\n\n")]
-    [(into [] (parse-stacks stacks)) (parse-moves moves)]))
+    [(vec (parse-stacks stacks)) (parse-moves moves)]))
 
 ; Logic
 
-(defn pop-n [stack n]
-  (let [[popped rest] (split-at n stack)]
-    [(reverse popped) rest]))
-
-(defn play-move [stacks [n from to]]
+(defn play-move [move-ordering stacks [n from to]]
   (let [from-stack (nth stacks from)
         to-stack (nth stacks to)
-        [popped rest] (pop-n from-stack n)]
+        [to-move rest] (split-at n from-stack)]
     (assoc stacks
            from rest
-           to (concat popped to-stack))))
+           to (concat (move-ordering to-move) to-stack))))
 
-(defn play-moves [[stacks moves]]
-  (reduce play-move stacks moves))
+(defn play-moves [move-ordering [stacks moves]]
+  (reduce (partial play-move move-ordering) stacks moves))
 
 (defn extract-top [stacks]
   (map first stacks))
 
 ; Part 1
-
 (->> input
      parse
-     play-moves
-     extract-top)
+     (play-moves reverse)
+      extract-top)
 
 ; Part 2
-
-(defn play-move [stacks [n from to]]
-  (let [from-stack (nth stacks from)
-        to-stack (nth stacks to)
-        [popped rest] (split-at n from-stack)] ; Key difference
-    (assoc stacks
-           from rest
-           to (concat popped to-stack))))
-
 (->> input
      parse
-     play-moves
+     (play-moves identity)
      extract-top)
