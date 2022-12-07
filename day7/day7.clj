@@ -25,14 +25,14 @@
        (reduce step {:pwd [] :fs {}})
        :fs))
 
-(defn dir-size [root dir]
+(defn dir-size [dir]
   (reduce-kv
-   (fn [{:keys [name size subdirs]} k v]
+   (fn [{:keys [size subdirs]} _ v]
      (if (map? v)
-       (let [sub-size (dir-size k v)]
-         {:name name :size (+ size (:size sub-size)) :subdirs (conj subdirs sub-size)})
-       {:name name :size (+ size v) :subdirs subdirs}))
-   {:name root :size 0 :subdirs []}
+       (let [sub-size (dir-size v)]
+         {:size (+ size (:size sub-size)) :subdirs (conj subdirs sub-size)})
+       {:size (+ size v) :subdirs subdirs}))
+   {:size 0 :subdirs []}
    dir))
 
 
@@ -40,7 +40,7 @@
 (def dir-sizes
   (->> input
        parse-fs
-       (dir-size "/")))
+       dir-size))
 
 (->> dir-sizes
      (tree-seq map? :subdirs)
