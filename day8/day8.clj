@@ -38,10 +38,12 @@
 
 ; Part 2
 (defn score [direction height]
-  (let [[lower rest] (split-with #(< % height) direction)]
-    (if (empty? rest)
-      (count lower)
-      (+ 1 (count lower)))))
+  (reduce (fn [score tree]
+            (if (< tree height)
+              (inc score)
+              (reduced (inc score))))
+          0
+          direction))
 
 (defn scenic-score [directions height]
   (reduce * (map #(score % height) directions)))
