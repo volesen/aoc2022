@@ -29,12 +29,14 @@
                 [above [_ & below]] (split-at i col)]]
       (f [(reverse left) right (reverse above) below] height))))
 
+; Part 1
 (->> input
      parse-grid
      (grid-walk visible?)
      (filter true?)
      count)
 
+; Part 2
 (defn score [direction height]
   (let [[lower rest] (split-with #(< % height) direction)]
     (if (empty? rest)
