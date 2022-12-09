@@ -23,10 +23,12 @@
     [(+ x2 (compare x1 x2)) (+ y2 (compare y1 y2))]
     [x2 y2]))
 
+
 (defn simulate-move [[head & rest] dir]
-  (reduce (fn [moved tail]
-            (conj moved
-                  (step-tail (first moved) tail)))
+  (reduce (fn [rope tail]
+            (let [prev (last rope)
+                  moved (step-tail prev tail)]
+              (conj rope moved)))
           [(step-head dir head)]
           rest))
 
