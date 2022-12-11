@@ -4,7 +4,7 @@
 
 (require  '[clojure.string :as str])
 
-(def input (slurp  "day8/test.txt"))
+(def input (slurp  "day08/test.txt"))
 
 (defn parse-digit [digit]
   (Character/digit digit 10))

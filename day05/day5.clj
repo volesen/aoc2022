@@ -1,6 +1,6 @@
 (require '[clojure.string :as str])
 
-(def input (slurp "day5/input.txt"))
+(def input (slurp "day05/input.txt"))
 
 (defn parse-move [move]
   (let [[_ n _ from _ to] (str/split move #" ")]

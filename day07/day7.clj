@@ -1,7 +1,7 @@
 (require '[clojure.string :as str])
 (require '[clojure.core.match :refer [match]])
 
-(def input (slurp "day7/input.txt"))
+(def input (slurp "day07/input.txt"))
 
 (defn step [{:keys [pwd fs]} command]
   (match (str/split command #" ")

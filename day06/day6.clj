@@ -1,4 +1,4 @@
-(def input (slurp "day6/input"))
+(def input (slurp "day06/input.txt"))
 
 (defn contains-duplicates? [s]
   (not (apply distinct? s)))

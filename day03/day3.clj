@@ -1,7 +1,7 @@
 (require '[clojure.string :as str])
 (require '[clojure.set :as set])
 
-(def input (slurp "day3/input.txt"))
+(def input (slurp "day03/input.txt"))
 
 (defn parse-compartments [line]
   (split-at (/ (count line) 2) line))

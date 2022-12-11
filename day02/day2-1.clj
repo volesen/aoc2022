@@ -1,6 +1,6 @@
 (require '[clojure.string :as str])
 
-(def input (slurp "day2/input.txt"))
+(def input (slurp "day02/input.txt"))
 
 ; Parsing
 (def parse-moves

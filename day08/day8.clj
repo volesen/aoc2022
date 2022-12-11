@@ -1,6 +1,6 @@
 (require  '[clojure.string :as str])
 
-(def input (slurp  "day8/input.txt"))
+(def input (slurp  "day08/input.txt"))
 
 (defn parse-digit [digit]
   (Character/digit digit 10))

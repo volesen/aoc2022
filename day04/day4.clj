@@ -1,6 +1,6 @@
 (require '[clojure.string :as str])
 
-(def input (slurp "day4/input"))
+(def input (slurp "day04/input.txt"))
 
 
 (defn parse-range

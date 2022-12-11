@@ -1,6 +1,6 @@
 (require '[clojure.string :as str])
 
-(def input (slurp "day9/input.txt"))
+(def input (slurp "day09/input.txt"))
 
 (defn parse [input]
   (for [line (str/split-lines input)
