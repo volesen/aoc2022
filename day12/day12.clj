@@ -36,18 +36,17 @@
     coord))
 
 (defn shortest-path [heights start end]
-  (loop [queue (list start)
-         distances {start 0}]
-    (if-let [current (first queue)]
-      (let [distance (get distances current)]
-        (if (= current end)
-          distance
-          (let [next (for [neighbor (neighbors heights current)
-                           :when (not (contains? distances neighbor))]
-                       [neighbor (inc distance)])
-                new-queue (concat (rest queue) (map first next))
-                new-seen (into distances next)]
-            (recur new-queue new-seen))))
+  (loop [queue (list [start 0])
+         seen #{start}]
+    (if-let [[current distance] (first queue)]
+      (if (= current end)
+        distance
+        (let [next (for [neighbor (neighbors heights current)
+                         :when (not (seen neighbor))]
+                     [neighbor (inc distance)])
+              new-queue (concat (rest queue) next)
+              new-seen (into seen (map first next))]
+          (recur new-queue new-seen)))
       ##Inf)))
 
 ; Part 1
