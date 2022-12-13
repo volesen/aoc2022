@@ -23,10 +23,10 @@
     (empty? right) 1
 
     :else
-    (let [a (first left) b (first right)]
-      (case (order a b)
-        0 (order (rest left) (rest right))
-        (order a b)))))
+    (let [first-order (order (first left) (first right))]
+      (if (zero? first-order)
+        (order (rest left) (rest right))
+        first-order))))
 
 (defn filter-indexes [pred coll]
   (keep-indexed (fn [i x] (when (pred x) (inc i))) coll))
