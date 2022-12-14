@@ -20,12 +20,10 @@
         y (between y1 y2)]
     [x y]))
 
-(defn simulate-particle [abyss grid]
+(defn simulate-particle [bottom grid]
   (loop [[x y] [500 0]]
     (cond
-      ; Reached abyss
-      (> y abyss)
-      nil
+      (>= y bottom) [x y]
 
       ; Go down
       (not (contains? (set grid) [x (inc y)]))
@@ -42,16 +40,29 @@
       ; Settle
       :else [x y])))
 
-(defn simulate-particles [abyss grid]
+(defn simulate-particles [stop? bottom grid]
   (loop [grid grid]
-    (if-let [particle (simulate-particle abyss grid)]
-      (recur (conj grid particle))
-      grid)))
+    (let [particle (simulate-particle bottom grid)]
+      (if (stop? particle)
+        grid
+        (recur (conj grid particle))))))
+
+(def grid
+  (->> parsed
+       (mapcat expand)
+       set))
 
 ; Part 1
-(let [expanded (mapcat expand parsed)
-      abyss  (apply max (map first expanded))
-      grid (set expanded)]
-  (-> (simulate-particles abyss grid)
+(let [abyss (apply max (map first grid))
+      stop? #(>= (second %) abyss)]
+  (-> (simulate-particles stop? abyss grid)
       (set/difference grid)
       count))
+
+; Part 2  
+(let [floor (inc (apply max (map second grid)))
+      stop? #(= % [500 0])]
+  (-> (simulate-particles stop? floor grid)
+      (set/difference grid)
+      count
+      inc)) ; Include the particle that settled at the top
