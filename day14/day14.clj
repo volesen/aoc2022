@@ -31,15 +31,15 @@
       (>= y bottom) [x y]
 
       ; Go down
-      (not (contains? (set settled) [x (inc y)]))
+      (not (contains? settled [x (inc y)]))
       (recur [x (inc y)])
 
       ; Go left
-      (not (contains? (set settled) [(dec x) (inc y)]))
+      (not (contains? settled [(dec x) (inc y)]))
       (recur [(dec x) (inc y)])
 
       ; Go right
-      (not (contains? (set settled) [(inc x) (inc y)]))
+      (not (contains? settled [(inc x) (inc y)]))
       (recur [(inc x) (inc y)])
 
       ; Settle
